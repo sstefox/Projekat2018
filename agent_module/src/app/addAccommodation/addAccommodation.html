@@ -1,0 +1,74 @@
+<div>
+  <div class="w3-panel w3-card-4 w3-padding w3-green">
+    <div class="w3-xxlarge w3-text-white w3-center w3-myfont "> Agent Management </div>
+  </div>
+</div>
+<app-menu></app-menu>
+<div style="width:75%;margin-left:10%;">
+  <form (ngSubmit)="save(accommodationForm.value)" #accommodationForm="ngForm" class="w3-container w3-card-4 w3-light-grey w3-text-green w3-margin">
+    <h2 class="w3-center">Add Accommodation</h2>
+
+    <div class="w3-row w3-section">
+      <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-map-marker"></i></div>
+      <div class="w3-rest">
+        <input class="w3-input w3-border" [(ngModel)]="accommodation.location" name="location" #location="ngModel" type="text" placeholder="Location" required>
+      </div>
+    </div>
+
+    <div class="w3-row w3-section">
+      <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+      <div class="w3-rest">
+        <input class="w3-input w3-border" [(ngModel)]="accommodation.title" name="title" #title="ngModel" type="text" placeholder="Title" required>
+      </div>
+    </div>
+
+
+    <div class="w3-row w3-section">
+      <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-pencil"></i></div>
+      <div class="w3-rest">
+        <input class="w3-input w3-border" name="description" [(ngModel)]="accommodation.description" #description="ngModel" type="text"
+          placeholder="Description" required>
+      </div>
+    </div>
+
+    <div class="w3-row w3-section">
+      <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-money"></i></div>
+      <div class="w3-rest">
+        <input class="w3-input w3-border" name="price"  pattern="(-?[0-9]+(\.[0-9]+)?)" [(ngModel)]="accommodation.price" #price="ngModel" type="text" placeholder="Price" required>
+      </div>
+    </div>
+
+    <div class="w3-row w3-section">
+      <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-list-ul"></i></div>
+      <div class="w3-rest">
+        <div *ngFor="let row of services">
+          <input class="w3-check" type="checkbox" value="{{row}}" (change)="checked(row)">
+          <label>&nbsp;&nbsp;<b>{{row}}</b></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="w3-row w3-section">
+      <div class="w3-col" style="width:50px"><i class="w3-xxlarge 	fa fa-group"></i></div>
+      <div class="w3-rest">
+        <input class="w3-input w3-border" name="capacity"  pattern="[1-9]*" [(ngModel)]="accommodation.capacity" #capacity="ngModel" type="number"
+          placeholder="Capacity" required>
+      </div>
+    </div>
+
+
+    <div class="w3-row w3-section">
+      <div class="w3-col" style="width:50px"><i class="w3-xxlarge 	fa fa-caret-square-o-right"></i></div>
+      <div class="w3-rest">
+        <select class="w3-select" name="acctype" [(ngModel)]="accommodation.acctype" #acctype="ngModel">
+        <option value="" disabled selected>Choose your option</option>
+        <option *ngFor="let row of accTypes" value="{{row}}">{{row}}</option>
+      </select>
+      </div>
+    </div>
+
+    <input type="submit" [disabled]="!accommodationForm.form.valid" class="w3-button w3-green w3-padding w3-margin" value="Submit" />
+
+  </form>
+
+</div>

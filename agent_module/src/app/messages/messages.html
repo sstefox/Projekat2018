@@ -1,0 +1,55 @@
+<div>
+  <div class="w3-panel w3-card-4 w3-padding w3-green">
+    <div class="w3-xxlarge w3-text-white w3-center w3-myfont "> Agent Management </div>
+  </div>
+</div>
+<app-menu></app-menu>
+<div style="width:75%;margin-left:10%;">
+  <div class="w3-container w3-card-4 w3-light-grey w3-text-green w3-margin">
+    <h2 class="w3-center">Client Messages</h2>
+    <div class="w3-container">
+      <table class="table">
+        <tr>
+          <th>From</th>
+          <th>On</th>
+          <th>Message</th>
+          <th>Status</th>
+          <th>Reply</th>
+        </tr>
+        <tr *ngFor="let row of messageList">
+          <td>{{row.fromname}}</td>
+          <td>{{row.entryDate}}</td>
+          <td>{{row.message}}</td>
+          <td>
+            <div *ngIf="row.status==1">
+              Replied
+            </div>
+            <div *ngIf="row.status==0">
+              Not Replied
+            </div>
+          </td>
+          <td>
+            <div *ngIf="row.status==0">
+              <input type="button" class="w3-btn w3-green" value="Reply" (click)="markMessage(row.fromname,row.accId,row.id);"/>
+            </div>
+            <div *ngIf="row.status==1">
+              NA
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="messageFlag===true"  >
+    <div class="w3-modal-content" style="width:75%;">
+    <form class="w3-margin" #messageForm="ngForm" (ngSubmit)="sendMessage(messageForm.value)">
+      <div class="w3-row w3-margin">
+        <textarea class="form-control" rows="5" id="comment" [(ngModel)]="messageModel.message" name="message" #message="ngModel"></textarea>
+      </div>
+      <div class="w3-row w3-margin">
+        <input type="submit" value="Submit Response" class="w3-btn w3-green" />
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

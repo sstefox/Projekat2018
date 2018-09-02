@@ -1,0 +1,221 @@
+<div class="w3-container w3-green">
+    <h1>Your Accommodations</h1>
+</div>
+<app-menu></app-menu>
+<input type="hidden" value="{{userlist}}" id="userlist" />
+<div class="mat-elevation-z8 w3-margin w3-border ">
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="td-class"> Title </th>
+            <td mat-cell *matCellDef="let row"> {{row.title}} </td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="td-class"> Price </th>
+            <td mat-cell *matCellDef="let row"> {{row.price}} </td>
+        </ng-container>
+        <ng-container matColumnDef="capacity">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="td-class"> Capacity </th>
+            <td mat-cell *matCellDef="let row"> {{row.capacity}} </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="td-class"> Type </th>
+            <td mat-cell *matCellDef="let row"> {{row.type}} </td>
+        </ng-container>
+        <ng-container matColumnDef="options">
+            <th mat-header-cell *matHeaderCellDef>Options </th>
+            <td mat-cell *matCellDef="let row">
+                <input id="{{'r'+row.id}}" type="button" value="Reservations" (click)="getReservations($event);" onclick="reservation(this.id)"
+                    class="w3-green w3-btn w3-margin" />
+                <input id="{{'i'+row.id}}" type="button" value="Images" (click)="getImages($event);" onclick="image(this.id)" class="w3-green w3-btn w3-margin"
+                />
+                <input id="{{'c'+row.id}}" type="button" value="Reviews" (click)="getComments($event);" onclick="review(this.id)" class="w3-green w3-btn w3-margin"
+                />
+                <div class="w3-modal" id="{{'rr'+row.id}}">
+                    <div class="w3-modal-content w3-card-4" style="width:100%;">
+                        <header class="w3-container w3-green">
+                            <h2>Manage Reservations</h2>
+                        </header>
+                        <div class="w3-container">
+                            <table class="table" id="{{'rt'+row.id}}">
+                                <tr>
+                                    <th>From Date</th>
+                                    <th>To Date</th>
+                                    <th>Status</th>
+                                    <th>Made By</th>
+                                    <th>Capacity</th>
+                                    <th>Price</th>
+                                    <th>Change Status</th>
+                                </tr>
+                                <tr *ngFor="let temp of reservationList">
+                                    <td>{{temp.fromDate}}</td>
+                                    <td>{{temp.toDate}}</td>
+                                    <td>
+                                        <div *ngIf="temp.status==0">
+                                            Raw
+                                        </div>
+                                        <div *ngIf="temp.status==1">
+                                            Approved
+                                        </div>
+                                    </td>
+                                    <td>{{temp.username}}</td>
+                                    <td>{{temp.capacity}}</td>
+                                    <td>{{temp.price}}</td>
+                                    <td>
+                                        <div *ngIf="temp.status==0">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="checkbox" value="{{temp.id}}" (change)="onChange($event)" />
+                                        </div>
+                                        <div *ngIf="temp.status==1">
+                                            NA
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                            <input type="button" class="w3-green w3-btn w3-margin" value="Approve Reservations" (click)="approveReservations();" />
+
+                            <div class="w3-container w3-margin">
+                                <h2 class="w3-margin">Add Reservation</h2>
+                                <form class="w3-margin" #reservationForm="ngForm" (ngSubmit)="addreservation(reservationForm.value,row.id)">
+                                    <table>
+                                        <tr class="table">
+                                            <th>From Date</th>
+                                            <th>To Date</th>
+                                            <th>Capacity</th>
+                                            <th>Price</th>
+                                            <th>User</th>
+                                        </tr>
+                                        <tr>
+
+                                            <td>
+                                                <div class="input-group">
+                                                    <input class="form-control" placeholder="yyyy-mm-dd" [(ngModel)]="reservationModel.fromDate" name="fromDate" ngbDatepicker
+                                                        #d1="ngbDatepicker" required>
+                                                    <div class="input-group-addon" (click)="d1.toggle()">
+                                                        <i class="fa fa-calendar w3-padding " aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <input class="form-control" placeholder="yyyy-mm-dd" [(ngModel)]="reservationModel.toDate" name="toDate" ngbDatepicker #d2="ngbDatepicker"
+                                                        required>
+                                                    <div class="input-group-addon" (click)="d2.toggle()">
+                                                        <i class="fa fa-calendar w3-padding " aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><input type="text" pattern="[1-9]*" [(ngModel)]="reservationModel.capacity" #capacity="ngModel"
+                                                    class="w3-input" name="capacity" style="width:50px;" /></td>
+                                            <td><input type="text" pattern="(-?[0-9]+(\.[0-9]+)?)" [(ngModel)]="reservationModel.price" #price="ngModel" name="price"
+                                                    class="w3-input" style="width:100px;" /></td>
+                                            <td><select name="username" class="w3-select" style="width:250px;" [(ngModel)]="reservationModel.username"
+                                                    #username="ngModel">
+        <option value="" disabled selected>Choose your option</option>
+        <option *ngFor="let r of userlist" value="{{r}}">{{r}}</option>
+      </select></td>
+                                        </tr>
+                                    </table>
+                                    <input type="submit" [disabled]="!reservationForm.form.valid" value="Submit" class="w3-btn w3-green w3-margin" />
+                                </form>
+                            </div>
+                        </div>
+                        <footer class="w3-container w3-border-green w3-margin">
+                            <p>
+                                <input type="button" value="Close" class="w3-btn w3-green" id="{{'c'+row.id}}" onclick="closereservation(this.id);" />
+
+                            </p>
+                        </footer>
+                    </div>
+                </div>
+
+                <div class="w3-modal" id="{{'ii'+row.id}}">
+                    <div class="w3-modal-content w3-card-4" style="width:100%;">
+                        <header class="w3-container w3-green">
+                            <h2>Manage Images</h2>
+                        </header>
+                        <div class="w3-container">
+                            <div class="w3-border-green w3-padding-16">
+                                <div class="col-md-12 text-left w3-margin">
+                                    <div class="w3-row">
+                                        <div *ngFor="let i of imgList ">
+                                            <img src="data:image/jpg;base64,{{i}}" class="w3-border w3-border-green w3-margin w3-card" style="width:25%;height:25%;"
+                                            />
+                                        </div>
+                                    </div>
+                                    <input type="button" id="{{'img'+row.id}}" (click)="addimages($event);" class="w3-button w3-circle w3-green w3-margin" value="+"
+                                    />
+
+                                    <div *ngIf="flag==true">
+                                        <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+                                        <button (click)="fileInput.click()" class="w3-button w3-circle w3-green">Select File</button>
+
+                                    </div>
+                                </div>
+                                <div class="w3-margin">
+                                    <h4>Selected Images</h4>
+                                    <div *ngFor="let t of selectedFile">n {{t.name}}
+                                    </div>
+                                </div>
+                            </div>
+                            <footer class="w3-container w3-border-green">
+
+                                <input type="button" (click)="onUpload(row.id)" value="Upload" class="w3-btn w3-green w3-margin" />                                &nbsp;&nbsp;
+                                <input type="button" value="Close" (click)="close();" class="w3-btn w3-green  w3-margin" id="{{'t'+row.id}}" onclick="closeimage(this.id);"
+                                />
+
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-modal" id="{{'cc'+row.id}}">
+                    <div class="w3-modal-content w3-card-4" style="width:100%;">
+                        <header class="w3-container w3-green">
+                            <h2>Reviews</h2>
+                        </header>
+                        <div class="w3-container">
+                            <table class="table">
+                                <tr>
+                                    <th>Rating</th>
+                                    <th>Comment</th>
+                                    <th>User</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                                <tr *ngFor="let t of commentList">
+                                    <td>{{t.rating}}</td>
+                                    <td>{{t.comment}}</td>
+                                    <td>{{t.user}}</td>
+                                    <td>{{t.entryDate}}</td>
+                                    <td>
+                                        <div *ngIf="t.status==1">
+                                            Published
+                                        </div>
+                                        <div *ngIf="t.status==0">
+                                            Un-Published
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <footer class="w3-container w3-border-green">
+                            <input type="button" value="Close" class="w3-btn w3-green  w3-margin" id="{{'c'+row.id}}" onclick="closereviews(this.id);"
+                            />
+
+                        </footer>
+                    </div>
+                </div>
+
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+</div>
