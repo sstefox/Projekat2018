@@ -1,0 +1,40 @@
+<app-menu></app-menu><div class="w3-container">
+  <div class="w3-panel w3-red">
+    <h3>Replies</h3>
+  </div>
+  <div class="w3-container w3-card-4 w3-margin w3-border">
+    <table class="table">
+      <tr>
+        <th>Content</th>
+        <th>Date</th>
+        <th>Sent By</th>
+        <th>Accommodation</th>
+      </tr>
+      <tr *ngFor="let row of byMsgList">
+        <td>{{row.message}}</td>
+        <td>{{row.date}}</td>
+        <td>{{row.sentBy}}</td>
+        <td>{{row.accommodation}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="w3-panel w3-red">
+    <h3>Your Messages</h3>
+  </div>
+  <div class="w3-container w3-card-4 w3-margin w3-border">
+    <table class="table">
+      <tr>
+        <th>Content</th>
+        <th>Date</th>
+        <th>Sent To</th>
+        <th>Accommodation</th>
+      </tr>
+      <tr *ngFor="let row of fromMsgList">
+        <td>{{row.message}}</td>
+        <td>{{row.date}}</td>
+        <td>{{row.sentTo}}</td>
+        <td>{{row.accommodation}}</td>
+      </tr>
+    </table>
+  </div>
+  </div>

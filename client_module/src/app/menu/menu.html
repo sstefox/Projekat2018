@@ -1,0 +1,13 @@
+<div class="w3-bar w3-red w3-large">
+  <a href="./client/home" class="w3-bar-item w3-button w3-red w3-mobile">Book Your Day</a>
+  <div class="w3-display-topright  ">
+  <div *ngIf="tokenVal!==null">
+      <input type="button" (click)="viewMessages();" class="w3-bar-item w3-button w3-red  w3-menufont" value="View Messages"/>
+      <input type="button" (click)="viewReservations();" class="w3-bar-item w3-button w3-red  w3-menufont" value="View Reservations"/>      
+      <input type="button" (click)="logout();" class="w3-bar-item w3-button w3-red w3-menufont" value="LogOut"/>
+  </div>
+  <div *ngIf="tokenVal===null">
+    <a href="./client/login" class="w3-bar-item w3-button w3-red w3-mobile">Login/Register</a>
+  </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div>
+<app-menu></app-menu>
+&nbsp;&nbsp;&nbsp;&nbsp;<h4 class="w3-font">Results</h4>
+&nbsp;&nbsp;&nbsp;(click on title for details)
+<div class="mat-elevation-z8 w3-margin w3-container" >
+  <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="td-class"> Title </th>
+            <td mat-cell *matCellDef="let row"> <a [routerLink]="['/client/accommodation/result']" (click)="linkReq(row.id)">{{row.title}}  </a></td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <td mat-cell *matCellDef="let row"> {{row.type}}</td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+            <td mat-cell *matCellDef="let row"> {{row.price}}</td>
+        </ng-container>
+          <ng-container matColumnDef="rating">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Rating </th>
+            <td mat-cell *matCellDef="let row"> {{row.rating}}</td>
+        </ng-container>
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+            <td mat-cell *matCellDef="let row"> {{row.category}}</td>
+        </ng-container>  
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+</div>
+</div>

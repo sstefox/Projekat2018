@@ -1,0 +1,174 @@
+<div class="w3-container">
+    <div class="w3-panel w3-red w3-text-white">
+        <h1>Client Manager</h1>
+    </div>
+    <h2>{{regStat}}</h2>
+    <div class="w3-container w3-border"> 
+    <div style="margin-left:20%;">
+        <div class="w3-row">
+            <a href="javascript:void(0)" onclick="openTab(event, 'loginUser');">
+                <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding"><span class="fa fa-eye w3-text-red"></span>&nbsp;&nbsp;Login</div>
+            </a>
+            <a href="javascript:void(0)" (click)="forgetPassword();" onclick="openTab(event, 'addUser');">
+                <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding"><span class="fa fa-plus w3-text-red"></span>&nbsp;&nbsp;Register</div>
+            </a>
+        </div>
+    </div>
+
+
+    <div id="loginUser" class="w3-card-4 w3-margin  selectionTab" style="width:50%;">
+        <form name="loginForm" (ngSubmit)="login()" #loginForm="ngForm">
+            <table class="w3-table w3-padding w3-margin">
+                <tr class="w3-margin">
+                    <td>
+                        <div class="w3-large">Username</div>
+                    </td>
+                    <td>
+                        <input type="text" style="width:50%;" class="w3-input" #username="ngModel" [(ngModel)]="user.username" name="username" value="{{user.username}}"
+                            requried/>
+                    </td>
+                </tr>
+                <tr class="w3-margin">
+                    <td>
+                        <div class="w3-large">Password</div>
+                    </td>
+                    <td>
+                        <input type="password" style="width:50%;" class="w3-input" name="password" [(ngModel)]="user.password" name="password" value="{{user.password}}"
+                            required/>
+                    </td>
+                </tr>
+            </table>
+            <div class="w3-row">
+                <input type="submit" value="Login" [disabled]="!loginForm.form.valid" class="w3-btn w3-red w3-margin" />
+            </div>
+        </form>
+        <input type="submit" value="Forget Password" (click)="forgetPassword();" class="w3-btn w3-red w3-margin" />
+    </div>
+
+
+<div class="w3-card-4 w3-margin w3-border w3-border-red" style="width:50%;" *ngIf="forgetPasswordFlag===true">
+        <form name="forgetPasswordForm" (ngSubmit)="changePassword(forgetPasswordForm.val)" #forgetPasswordForm="ngForm">
+
+            <table class="w3-table w3-margin">
+                <tr>
+                    <td>
+                        <div class="w3-large">Username</div>
+                    </td>
+                    <td><input type="text" style="width:50%;" class="w3-input" #username="ngModel" [(ngModel)]="changeUser.username"
+                            name="username" value="{{changeUser.username}}" requried/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="w3-large">New Password</div>
+                    </td>
+                    <td><input type="password" style="width:50%;" class="w3-input" name="password" [(ngModel)]="changeUser.password"
+                            name="password" value="{{changeUser.password}}" required/></td>
+                </tr>
+            </table>
+            <div class="w3-row">
+                <input type="submit" value="Change Password" (click)="changePassword();" [disabled]="!forgetPasswordForm.form.valid" class="w3-btn w3-red w3-margin"
+                />
+            </div>
+
+        </form>
+    </div>
+
+
+
+
+
+    <div id="addUser" class="w3-card-4 w3-padding w3-margin w3-text-red selectionTab" style="width:50%;" style="display:none">
+        <form name="registerForm" (ngSubmit)="register(registerForm.value);" #registerForm="ngForm">
+            <h2 class="w3-center">Details</h2>
+
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+                <div class="w3-rest">
+                    <input class="w3-input w3-border" [(ngModel)]="registeruser.firstName" name="firstName" #firstName="ngModel" type="text"
+                        placeholder="First Name" required>
+                </div>
+                <div [hidden]="firstName.valid || firstName.pristine" class="w3-text-red">
+                    First Name required
+                </div>
+            </div>
+
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+                <div class="w3-rest">
+                    <input class="w3-input w3-border" [(ngModel)]="registeruser.lastName" name="lastName" #lastName="ngModel" type="text" placeholder="Last Name"
+                        required>
+                </div>
+                <div [hidden]="lastName.valid || lastName.pristine" class="w3-text-red">
+                    Last Name required
+                </div>
+            </div>
+
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>
+                <div class="w3-rest">
+                    <input class="w3-input w3-border" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="registeruser.email" name="email"
+                        #email="ngModel" type="text" placeholder="Email" required>
+                </div>
+                <div [hidden]="email.valid " class="w3-text-red">
+                    Email required
+                </div>
+                <div [hidden]="!email.errors?.pattern " class="w3-text-red">
+                    Invalid Email
+                </div>
+            </div>
+
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-phone"></i></div>
+                <div class="w3-rest">
+                    <input class="w3-input w3-border" pattern="[0-9]+" [(ngModel)]="registeruser.phoneNumber" name="phoneNumber" #phoneNumber="ngModel"
+                        type="text" placeholder="Phone" required>
+                </div>
+                <div [hidden]="phoneNumber.valid || phoneNumber.pristine" class="w3-text-red">
+                    Phone Number required
+                </div>
+                <div [hidden]="!phoneNumber.errors?.pattern" class="w3-text-red">
+                    Invalid Phone Number
+                </div>
+            </div>
+
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file"></i></div>
+                <div class="w3-rest">
+                    <input class="w3-input w3-border" [(ngModel)]="registeruser.address" name="address" #address="ngModel" type="text" placeholder="Address"
+                        required>
+                </div>
+                <div [hidden]="address.valid || address.pristine" class="w3-text-red">
+                    Address required
+                </div>
+            </div>
+
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-pencil"></i></div>
+                <div class="w3-rest">
+                    <input  class="w3-input w3-border" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}" [(ngModel)]="registeruser.password" name="password" #password="ngModel" type="password" 
+                        placeholder="Password" required>
+                    <div [hidden]="password.valid || password.pristine" class="w3-text-red">
+                    Password required
+                </div>
+                <div [hidden]="!password.errors?.pattern" class="w3-text-red">
+                    Password should have atleast a number,lower case,upper case and special character.
+                    It should have atleast 8 characters.
+                </div>   
+                </div>
+            </div>
+
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-pencil"></i></div>
+                <div class="w3-rest">
+                    You Entered  : {{registeruser.password}}
+                </div>
+            </div>
+
+            <button [disabled]="!registerForm.form.valid" class="w3-button w3-block w3-section w3-red w3-ripple w3-padding">Send</button>
+
+        </form>
+    </div>
+    </div>
+
+
+</div>

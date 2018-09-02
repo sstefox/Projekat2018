@@ -1,0 +1,65 @@
+<app-menu></app-menu>
+
+<header class="w3-display-container w3-content " style="max-width:1500px;">
+  <img class="w3-image" src="assets/images/background.jpg" alt="The Hotel" style="min-width:1000px" width="1500" height="800">
+  <div class="w3-display-left w3-padding w3-col">
+    <div class="w3-container w3-red">
+      <h2>Search</h2>
+    </div>
+    <div class="w3-container w3-white w3-padding-16">
+      <form #searchForm="ngForm" (ngSubmit)="search(searchForm.value)">
+        <div class="w3-row-padding" style="margin:0 -16px;">
+          <div class="w3-quarter">
+            <div class="input-group" style="margin-top:28px;">
+              <input class="w3-input w3-border" style="width:250px;" placeholder="yyyy-mm-dd" [(ngModel)]="searchModel.fromDate" name="fromDate"
+                ngbDatepicker #d1="ngbDatepicker" required>
+              <div class="input-group-addon" (click)="d1.toggle()">
+                <i class="fa fa-calendar w3-padding " aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+          <div class="w3-quarter">
+            <div class="input-group" style="margin-top:28px;">
+              <input class="w3-input w3-border" style="width:250px;" placeholder="yyyy-mm-dd" [(ngModel)]="searchModel.toDate" name="toDate"
+                ngbDatepicker #d2="ngbDatepicker" required>
+              <div class="input-group-addon" (click)="d2.toggle()">
+                <i class="fa fa-calendar w3-padding " aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+          <div class="w3-quarter">
+            <label><i class="fa fa-male"></i> Number</label>
+            <input class="w3-input w3-border" type="number" value="1" name="capacity" [(ngModel)]="searchModel.capacity" #capacity="ngModel"
+              name="capacity" min="1" max="6">
+          </div>
+          <div class="w3-quarter">
+            <label><i class="fa fa-map-marker"></i> Location</label>
+            <input class="w3-input w3-border" type="text" name="location" [(ngModel)]="searchModel.location" #location="ngModel" name="location"
+              required>
+          </div>
+        </div>
+        <div *ngIf="showFlag">
+          <div class="w3-row w3-card-4 w3-margin w3-padding">
+            <div class=" w3-col s4" id="accommodationType">
+              <div *ngFor="let row of accTypes">
+                <input type="radio" value="{{row.id}}" name="typeName"  (change)="onTypeClicked(row.id)"/>{{row.typeName}}
+              </div>
+            </div>
+            <div class=" w3-col s4" id="accommodationCategory">
+              <div *ngFor="let row of categories">
+                <input type="radio" name="categoryName" value="{{row.id}}" (change)="onItemChange(row.id)" />{{row.categoryName}}
+              </div>
+            </div>
+            <div class=" w3-col s4" id="additionalServices">
+              <div *ngFor="let row of services">
+                <input type="checkbox" value="{{row.id}}"  (change)="onServiceClicked($event)"/>{{row.serviceName}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="w3-button w3-dark-grey w3-margin" type="button" (click)="advanceSearch();">Advance Search</button>
+        <button class="w3-button w3-dark-grey w3-margin" type="submit"><i class="fa fa-search w3-margin-right"></i> Search availability</button>
+      </form>
+    </div>
+  </div>
+</header>

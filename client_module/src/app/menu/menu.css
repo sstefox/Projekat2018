@@ -1,0 +1,11 @@
+.w3-myfont {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+   font-size: 30px;
+   font-weight: bold;
+}
+.w3-menufont {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+   font-size: 15px;
+   font-weight: bold;
+   color: white !important;
+}
