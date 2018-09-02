@@ -1,0 +1,46 @@
+<div>
+  <div class="w3-panel w3-card-4 w3-padding w3-cyan">
+    <div class="w3-xxlarge w3-text-white w3-center w3-myfont "> Additional Services </div>
+  </div>
+  <app-menu></app-menu>
+  <div style="margin-left:20%;">
+    <div class="w3-row">
+      <a href="javascript:void(0)" onclick="openTab(event, 'viewService');">
+        <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding"><span class="fa fa-eye w3-text-cyan"></span>&nbsp;&nbsp;View Services</div>
+      </a>
+      <a href="javascript:void(0)" onclick="openTab(event, 'addService');">
+        <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding"><span class="fa fa-plus w3-text-cyan"></span>&nbsp;&nbsp;Add Services</div>
+      </a>
+    </div>
+    <div id="viewService" class="w3-container selectionTab">
+      <h2>Current Additional Services</h2>
+<table class="table">
+  <thead>
+    <tr class="w3-text-blue">
+      <th>Id</th>
+      <th>Service Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of result">
+      <td>{{ row.id }}</td>
+      <td>{{ row.serviceName }}</td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+    <div id="addService" class="w3-container selectionTab" style="display:none">
+      <h2>Add New Service</h2>
+      <div class="w3-card-4" style="width:50%;padding:5%;">
+        <form class="w3-container" (ngSubmit)="save(additionalServiceForm.value)" #additionalServiceForm="ngForm">
+          <div class="w3-margin">
+            <label>Service Name</label>
+            <input [(ngModel)]="additionalService.serviceName" name="serviceName" #serviceName="ngModel" class="w3-input" type="text" required>
+          </div>
+          <input type="submit" class="w3-margin w3-btn w3-cyan w3-text-white" value="Submit"  [disabled]="!additionalServiceForm.form.valid"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

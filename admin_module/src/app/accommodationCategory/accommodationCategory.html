@@ -1,0 +1,46 @@
+<div>
+    <div class="w3-panel w3-card-4 w3-padding w3-cyan">
+        <div class="w3-xxlarge w3-text-white w3-center w3-myfont "> Accommodation Category </div>
+    </div>
+    <app-menu></app-menu>
+        <div style="margin-left:20%;">
+            <div class="w3-row">
+                <a href="javascript:void(0)" onclick="openTab(event, 'viewCategory');">
+                    <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding"><span class="fa fa-eye w3-text-cyan"></span>&nbsp;&nbsp;View Accommodation Category</div>
+                </a>
+                <a href="javascript:void(0)" onclick="openTab(event, 'addCategory');">
+                    <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding"><span class="fa fa-plus w3-text-cyan"></span>&nbsp;&nbsp;Add Accommodation Category</div>
+                </a>
+            </div>
+       
+        <div id="viewCategory" class="w3-container selectionTab">
+            <h2>Current Accommodation Categories</h2>
+<table class="table">
+  <thead>
+    <tr class="w3-text-blue">
+      <th>Id</th>
+      <th>Accommodation Category Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of result">
+      <td>{{ row.id }}</td>
+      <td>{{ row.categoryName }}</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+        <div id="addCategory" class="w3-container selectionTab" style="display:none">
+            <h2>Add New Accommodation Category</h2>
+            <div class="w3-card-4" style="width:50%;padding:5%;">
+                <form class="w3-container" (ngSubmit)="save(accommodationCategory.value)" #accommodationCategory="ngForm" required>
+                    <div class="w3-margin">
+                        <label>Accommodation Category Name</label>
+                        <input class="w3-input" [(ngModel)]="accommodationCategory.accommodationCategoryName" name="accommodationCategoryName" #accommodationCategoryName="ngModel" type="text" required>
+                    </div>
+                    <input type="submit" class="w3-margin w3-btn w3-cyan w3-text-white" value="Submit"  [disabled]="!accommodationCategory.form.valid"/>
+                </form>
+            </div>
+        </div>
+         </div>
+</div>

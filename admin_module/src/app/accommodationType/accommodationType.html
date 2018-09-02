@@ -1,0 +1,46 @@
+<div>
+    <div class="w3-panel w3-card-4 w3-padding w3-cyan">
+        <div class="w3-xxlarge w3-text-white w3-center w3-myfont "> Accommodation Type </div>
+    </div>
+    <app-menu></app-menu>
+        <div style="margin-left:20%;">
+            <div class="w3-row">
+                <a href="javascript:void(0)" onclick="openTab(event, 'viewTypes');">
+                    <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding"><span class="fa fa-eye w3-text-cyan"></span>&nbsp;&nbsp;View Accommodation Type</div>
+                </a>
+                <a href="javascript:void(0)" onclick="openTab(event, 'addTypes');">
+                    <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding"><span class="fa fa-plus w3-text-cyan"></span>&nbsp;&nbsp;Add Accommodation Type</div>
+                </a>
+            </div>
+        
+        <div id="viewTypes" class="w3-container selectionTab">
+            <h2>Current Accommodation Types</h2>
+<table class="table">
+  <thead>
+    <tr class="w3-text-blue">
+      <th>Id</th>
+      <th>Accommodation Type Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of result">
+      <td>{{ row.id }}</td>
+      <td>{{ row.typeName }}</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+        <div id="addTypes" class="w3-container selectionTab" style="display:none">
+            <h2>Add New Accommodation Type</h2>
+            <div class="w3-card-4" style="width:50%;padding:5%;">
+                <form class="w3-container" (ngSubmit)="save(accommodationType.value)" #accommodationType="ngForm">
+                    <div class="w3-margin">
+                        <label>Accommodation Type Name</label>
+                        <input [(ngModel)]="accommodationType.accommodationTypeName" name="accommodationTypeName" #accommodationTypeName="ngModel"  class="w3-input" type="text" required>
+                    </div>
+                    <input type="submit" [disabled]="!accommodationType.form.valid" class="w3-margin w3-btn w3-cyan w3-text-white" value="Submit" />
+                </form>
+            </div>
+        </div>
+        </div>
+</div>
