@@ -48,10 +48,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.cors().and().csrf().disable().authorizeRequests()
-				
-//				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-//				.antMatchers("/client/**").access("hasRole('ROLE_USER')")
-				.anyRequest().authenticated().and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+				.antMatchers("/admin/**","/admin/**/**","/admin/**/**/**","/admin/**/**/**/**","/admin/**/**/**/**/**").hasRole("ADMIN")
+				.antMatchers("/client/**","/client/**/**","/client/**/**/**","/client/**/**/**/**","/client/**/**/**/**/**").hasRole("USER")
+				.and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 

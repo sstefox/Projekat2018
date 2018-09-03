@@ -55,7 +55,7 @@ public class JwtAuthenticationFilter
       UserDetails userDetails = userDetailsService.loadUserByUsername(username);
       
       if (jwtTokenUtil.validateToken(authToken, userDetails).booleanValue()) {
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, Arrays.asList(new SimpleGrantedAuthority[] { new SimpleGrantedAuthority("ROLE_ADMIN"),new SimpleGrantedAuthority("ROLE_USER"),new SimpleGrantedAuthority("ROLE_AGENT") }));
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, Arrays.asList(new SimpleGrantedAuthority[] { new SimpleGrantedAuthority("ROLE_ADMIN"),new SimpleGrantedAuthority("ROLE_USER"),new SimpleGrantedAuthority("ROLE_AGENT")}));
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
         logger.info("authenticated user " + username + ", setting security context");
         SecurityContextHolder.getContext().setAuthentication(authentication);
