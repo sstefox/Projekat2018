@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -96,7 +97,7 @@ public class AgentController {
 
 	@PostMapping("/upload")
 	public ResponseEntity<String> singleFileUpload(@RequestParam("file[]") List<MultipartFile> fileList,
-//			@PathVariable("accommodationId") int accommodationId,
+			@RequestParam("accommodationId") int accommodationId,
 			RedirectAttributes redirectAttributes) {
 		ResponseEntity<String> entity = null;
 		if (fileList.isEmpty()) {
@@ -104,7 +105,7 @@ public class AgentController {
 			return entity;
 		}
 		try {
-			boolean status = accommodationService.saveAccommodationImages(fileList, 10);
+			boolean status = accommodationService.saveAccommodationImages(fileList, accommodationId);
 			if (status) {
 				entity = new ResponseEntity<String>("Success", HttpStatus.OK);
 			}
